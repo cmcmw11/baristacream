@@ -89,6 +89,8 @@ select {
 <div class="controls">
   <select onchange="showSection(this.value)">
     <option value="">เลือกหมวด</option>
+<option value="coffeeTerms">☕ Aussie Coffee Terms</option>
+<option value="technical">🛠 Barista Technical Terms</option>
 
     <option value="greetings">🗣 Greetings</option>
     <option value="orders">☕ Taking Orders</option>
@@ -105,6 +107,146 @@ select {
   </select>
 
   <button class="toggle" onclick="toggleThai()">ซ่อนคำแปล</button>
+</div>
+<!-- DETAILED COFFEE TERMS -->
+<div id="coffeeTerms" class="section">
+
+  <div class="card">
+    <div class="eng">Flat White</div>
+    <div class="th">กาแฟนมที่โฟมน้อยและเนียนกว่า Latte (ยอดฮิตที่สุด)</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Long Black</div>
+    <div class="th">คล้าย Americano แต่ใส่น้ำร้อนก่อนแล้วค่อยสกัดกาแฟ เพื่อรักษาครีม่า</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Short Black</div>
+    <div class="th">Espresso 1 ช็อต</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Piccolo Latte</div>
+    <div class="th">ลาเต้แก้วเล็ก (ช็อตเอสเปรสโซในแก้ว 100ml)</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Magic</div>
+    <div class="th">เมนูเฉพาะเมลเบิร์น: Double Ristretto กับนมในแก้วเล็ก</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Babyccino</div>
+    <div class="th">นมร้อนตีฟอง โรยโกโก้ (สำหรับเด็ก)</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Strong / Weak</div>
+    <div class="th">Strong = Double shot | Weak = Half shot</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Skinny</div>
+    <div class="th">นมไขมันต่ำ (Skim milk)</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Soy / Almond / Oat / Macadamia milk</div>
+    <div class="th">นมทางเลือก</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Quarter strength</div>
+    <div class="th">ใส่กาแฟแค่ 1/4 ส่วน</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Dash of milk</div>
+    <div class="th">ใส่นมแค่นิดเดียว</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+</div>
+<!-- TECHNICAL TERMS -->
+<div id="technical" class="section">
+
+  <div class="card">
+    <div class="eng">Dose</div>
+    <div class="th">ปริมาณผงกาแฟ</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Yield</div>
+    <div class="th">ปริมาณน้ำกาแฟที่สกัดออกมา</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Extraction time</div>
+    <div class="th">ระยะเวลาการสกัด</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Tamping</div>
+    <div class="th">การกดกาแฟ</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Texturing milk</div>
+    <div class="th">การสตรีมนมให้เกิดฟองเนียน</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Microfoam</div>
+    <div class="th">ฟองนมละเอียด (สำหรับ Latte Art)</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Over-extracted / Under-extracted</div>
+    <div class="th">สกัดเกิน = ขม | สกัดน้อย = เปรี้ยว/จาง</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Purge the steam wand</div>
+    <div class="th">พ่นไอน้ำทิ้งเพื่อไล่น้ำในท่อ</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Dialing in</div>
+    <div class="th">การปรับเครื่องบดให้ได้รสชาติที่ต้องการ</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Group head / Portafilter</div>
+    <div class="th">หัวชง / ก้านชง</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Knock box / Backflush</div>
+    <div class="th">ถังเคาะกาก / การล้างหัวชง</div>
+    <button class="speak" onclick="speak(this)">🔊</button>
+  </div>
+
 </div>
 
 
