@@ -1,146 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barista English Practice 🇦🇺</title>
-    <style>
-        :root {
-            --primary: #6F4E37;
-            --secondary: #ECB176;
-            --light: #FED8B1;
-            --bg: #FFF8E1;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 { color: var(--primary); text-align: center; }
-        .container { max-width: 800px; width: 100%; }
-        
-        /* Category Tabs */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-        .tab-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            background-color: white;
-            color: var(--primary);
-            cursor: pointer;
-            border: 2px solid var(--primary);
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☕ Barista English Practice</title>
 
-        /* Sentence List */
-        .sentence-card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid var(--secondary);
-        }
-        .text-group { flex-grow: 1; }
-        .en { font-size: 1.1rem; font-weight: bold; color: var(--primary); display: block; }
-        .th { font-size: 0.9rem; color: #666; }
-        
-        .play-btn {
-            background: var(--secondary);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: 0.2s;
-        }
-        .play-btn:hover { transform: scale(1.1); background: var(--light); }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #f3ede7;
+  margin: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+h1 {
+  text-align: center;
+  color: #6f4e37;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+select, button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  font-size: 14px;
+}
+
+select {
+  background: #d7c3a3;
+}
+
+.toggle {
+  background: #a47148;
+  color: white;
+}
+
+.section {
+  display: none;
+}
+
+.card {
+  background: #fffaf5;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.eng {
+  font-weight: bold;
+  color: #4b2e1f;
+}
+
+.th {
+  font-size: 14px;
+  color: #6b4b3e;
+  margin-top: 4px;
+}
+
+.speak {
+  margin-top: 6px;
+  background: #8b5e3c;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+</style>
 </head>
+
 <body>
+<div class="container">
+  <h1>☕ Barista English</h1>
+<div class="controls">
+  <select onchange="showSection(this.value)">
+    <option value="">เลือกหมวด</option>
 
-    <h1>☕ Barista Australia Cheat Sheet</h1>
-    
-    <div class="container">
-        <div class="tabs" id="tabContainer">
-            <button class="tab-btn active" onclick="filterCategory('greeting')">Greeting</button>
-            <button class="tab-btn" onclick="filterCategory('order')">Taking Order</button>
-            <button class="tab-btn" onclick="filterCategory('payment')">Payment</button>
-            <button class="tab-btn" onclick="filterCategory('coworker')">Co-worker</button>
-        </div>
+    <option value="greetings">🗣 Greetings</option>
+    <option value="orders">☕ Taking Orders</option>
+    <option value="confirming">✅ Confirming Orders</option>
+    <option value="payment">💰 Payment</option>
+    <option value="smalltalk">🙂 Small Talk</option>
 
-        <div id="sentenceList">
-            </div>
-    </div>
+    <option value="milktemp">🥛 Milk & Temperature</option>
+    <option value="strength">⚡ Strength & Shots</option>
+    <option value="sweeteners">🍯 Sweeteners & Syrups</option>
+    <option value="niche">🎯 Niche & Specific Orders</option>
+    <option value="office">👥 The Office Run</option>
+    <option value="doublecheck">🔁 Double Check</option>
+  </select>
 
-    <script>
-        const data = [
-            { cat: 'greeting', en: "G'day! How's it going?", th: "สวัสดี! เป็นไงบ้าง (สไตล์ออสซี่)" },
-            { cat: 'greeting', en: "Morning! How are you today?", th: "อรุณสวัสดิ์ครับ วันนี้เป็นอย่างไรบ้าง?" },
-            { cat: 'greeting', en: "What can I get started for you?", th: "รับอะไรดีครับวันนี้?" },
-            { cat: 'order', en: "Is that for here or takeaway?", th: "ทานนี่หรือรับกลับบ้านดีครับ?" },
-            { cat: 'order', en: "What kind of milk would you like?", th: "รับเป็นนมชนิดไหนดีครับ?" },
-            { cat: 'order', en: "Any sugar in that?", th: "ใส่หมอไหมครับ?" },
-            { cat: 'payment', en: "That’ll be 5 dollars 50, please.", th: "ทั้งหมด 5 ดอลล่าร์ 50 เซนต์ครับ" },
-            { cat: 'payment', en: "Just tap your card here.", th: "แตะบัตรตรงนี้ได้เลยครับ" },
-            { cat: 'coworker', en: "Can you jump on the milk?", th: "ช่วยสตีมนมหน่อยได้ไหม?" },
-            { cat: 'coworker', en: "Behind! Hot!", th: "ระวังข้างหลัง! ของร้อน!" }
-        ];
+  <button class="toggle" onclick="toggleThai()">ซ่อนคำแปล</button>
+</div>
 
-        function renderSentences(filter) {
-            const list = document.getElementById('sentenceList');
-            list.innerHTML = '';
-            const filtered = data.filter(item => item.cat === filter);
-            
-            filtered.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'sentence-card';
-                div.innerHTML = `
-                    <div class="text-group">
-                        <span class="en">${item.en}</span>
-                        <span class="th">${item.th}</span>
-                    </div>
-                    <button class="play-btn" onclick="speak('${item.en}')">🔊</button>
-                `;
-                list.appendChild(div);
-            });
-        }
 
-        function filterCategory(cat) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderSentences(cat);
-        }
+  <!-- GREETINGS -->
+<div id="greetings" class="section">
 
-        function speak(text) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = 'en-AU'; // ตั้งเป็นสำเนียงออสเตรเลีย
-            window.speechSynthesis.speak(msg);
-        }
+  <div class="card">
+    <div class="eng">Morning! How are you doing today?</div>
+    <div class="th">อรุณสวัสดิ์ครับ วันนี้เป็นอย่างไรบ้าง?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
 
-        // Initial render
-        renderSentences('greeting');
-    </script>
+  <div class="card">
+    <div class="eng">Hi there, what can I get started for you?</div>
+    <div class="th">สวัสดีครับ รับอะไรดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">How’s your morning going so far?</div>
+    <div class="th">เช้านี้เป็นอย่างไรบ้าง?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Lovely day, isn’t it?</div>
+    <div class="th">วันนี้อากาศดีนะครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Hey guys, how’s it going?</div>
+    <div class="th">สวัสดีครับทุกคน เป็นอย่างไรบ้าง?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Good to see you again!</div>
+    <div class="th">ดีใจที่ได้เจอคุณอีกครั้ง (ใช้กับขาประจำ)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Take your time, let me know when you’re ready.</div>
+    <div class="th">ตามสบายนะครับ พร้อมแล้วบอกผมได้เลย</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+
+
+ <!-- TAKING ORDERS -->
+<div id="orders" class="section">
+
+  <div class="card">
+    <div class="eng">What can I get for you?</div>
+    <div class="th">รับอะไรดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Would you like a regular or a large?</div>
+    <div class="th">รับแก้วปกติหรือแก้วใหญ่ดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Any sugars in that?</div>
+    <div class="th">ใส่น้ำตาลไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">What kind of milk would you like?</div>
+    <div class="th">รับนมแบบไหนดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Full cream, skim, or soy?</div>
+    <div class="th">นมสด, นมไขมันต่ำ หรือนมถั่วเหลืองดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Is that for here or to go?</div>
+    <div class="th">ทานที่นี่หรือรับกลับครับ? (ออสซี่นิยมพูด Takeaway)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Would you like anything to eat with that?</div>
+    <div class="th">รับขนมทานคู่กันไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">We have some fresh muffins just out of the oven.</div>
+    <div class="th">เรามีมัฟฟินเพิ่งอบเสร็จใหม่ๆ เลยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">How do you like your coffee?</div>
+    <div class="th">ชอบกาแฟแบบไหนเป็นพิเศษไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Extra shot or decaf?</div>
+    <div class="th">เพิ่มช็อตหรือแบบไม่มีคาเฟอีนดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Do you want that extra hot?</div>
+    <div class="th">รับแบบร้อนจัดเลยไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- DETAILED COFFEE TERMS -->
+<div id="coffee" class="section">
+
+  <div class="card">
+    <div class="eng">Flat White</div>
+    <div class="th">กาแฟนมที่โฟมน้อยและเนียนกว่า Latte (ยอดฮิตที่สุด)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Long Black</div>
+    <div class="th">คล้าย Americano แต่ใส่น้ำร้อนก่อนแล้วค่อยสกัดกาแฟ เพื่อรักษาครีม่า</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Short Black</div>
+    <div class="th">Espresso 1 ช็อต</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Piccolo Latte</div>
+    <div class="th">ลาเต้แก้วเล็ก (เอสเปรสโซในแก้วประมาณ 100 ml)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Magic</div>
+    <div class="th">กาแฟเฉพาะเมลเบิร์น: Double Ristretto กับนมในแก้วเล็ก</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Babyccino</div>
+    <div class="th">นมร้อนตีฟอง โรยผงโกโก้ (สำหรับเด็ก)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Strong</div>
+    <div class="th">เพิ่มกาแฟ (Double shot)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Weak</div>
+    <div class="th">ลดกาแฟ (Half shot)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Skinny</div>
+    <div class="th">นมไขมันต่ำ (Skim milk)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Soy / Almond / Oat / Macadamia milk</div>
+    <div class="th">นมทางเลือกต่าง ๆ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Quarter strength</div>
+    <div class="th">ใส่กาแฟเพียง 1/4 (สำหรับคนไม่เน้นเข้ม)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Dash of milk</div>
+    <div class="th">ใส่นมแค่นิดเดียว</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- CONFIRMING ORDERS -->
+<div id="confirming" class="section">
+
+  <div class="card">
+    <div class="eng">So, that’s one small Flat White and a large Cappuccino?</div>
+    <div class="th">สรุปคือ แฟลตไวท์เล็กหนึ่ง และคาปูชิโน่ใหญ่หนึ่งนะครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Just to confirm, one Skinny Latte with two sugars?</div>
+    <div class="th">ขอทวนออเดอร์นะครับ ลาเต้นมไขมันต่ำ ใส่น้ำตาล 2 ช้อน?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Is that everything for today?</div>
+    <div class="th">รับอย่างอื่นเพิ่มไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">That was a Flat White with Oat milk, right?</div>
+    <div class="th">เมื่อกี้คือแฟลตไวท์นมโอ๊ตใช่ไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- PAYMENT -->
+<div id="payment" class="section">
+
+  <div class="card">
+    <div class="eng">That will be $5.50, please.</div>
+    <div class="th">ทั้งหมด 5.50 เหรียญครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Would you like to pay by card or cash?</div>
+    <div class="th">จ่ายบัตรหรือเงินสดดีครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">You can tap your card right here.</div>
+    <div class="th">แตะบัตรตรงนี้ได้เลยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Do you need a receipt?</div>
+    <div class="th">รับใบเสร็จไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Here is your change.</div>
+    <div class="th">นี่เงินทอนครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">The EFTPOS machine is just processing.</div>
+    <div class="th">เครื่องรูดบัตรกำลังประมวลผลครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Sorry, the payment didn’t go through. Could you try again?</div>
+    <div class="th">ขออภัยครับ การชำระเงินไม่ผ่าน รบกวนลองอีกครั้งได้ไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- SMALL TALK -->
+<div id="smalltalk" class="section">
+
+  <div class="card">
+    <div class="eng">Working today?</div>
+    <div class="th">วันนี้ไปทำงานเหรอครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Got any big plans for the weekend?</div>
+    <div class="th">สุดสัปดาห์นี้มีแผนอะไรไหมครับ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">It’s freezing outside, isn’t it?</div>
+    <div class="th">ข้างนอกหนาวมากเลยเนอะ?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">It won’t be long.</div>
+    <div class="th">รอสักครู่นะครับ ไม่นานครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">We’re a bit busy this morning, thanks for your patience.</div>
+    <div class="th">เช้านี้ยุ่งนิดหน่อย ขอบคุณที่รอนะครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll bring it out to your table.</div>
+    <div class="th">เดี๋ยวผมเอาไปเสิร์ฟที่โต๊ะนะครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Enjoy your coffee!</div>
+    <div class="th">ขอให้มีความสุขกับกาแฟครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Have a great day!</div>
+    <div class="th">ขอให้เป็นวันที่ดีครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Catch you later!</div>
+    <div class="th">ไว้เจอกันใหม่ครับ (สไตล์ออสซี่)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- TEAM COMMUNICATION -->
+<div id="team" class="section">
+
+  <div class="card">
+    <div class="eng">Can you jump on the till?</div>
+    <div class="th">ช่วยไปเฝ้าเครื่องคิดเงินหน่อยได้ไหม?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll handle the milk, you do the shots.</div>
+    <div class="th">เดี๋ยวผมสตรีมนม คุณกดช็อตกาแฟนะ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">We’re running low on full cream milk.</div>
+    <div class="th">นมสดใกล้หมดแล้ว</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can you restock the lids?</div>
+    <div class="th">ช่วยเติมฝาแก้วหน่อยได้ไหม?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I need a clean cloth, please.</div>
+    <div class="th">ขอผ้าสะอาดหน่อยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Behind!</div>
+    <div class="th">ระวังข้างหลังครับ! (ใช้ตอนเดินผ่าน)</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Watch out, hot coffee!</div>
+    <div class="th">ระวังครับ กาแฟร้อน!</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can you clear table five?</div>
+    <div class="th">ช่วยเก็บโต๊ะเบอร์ 5 หน่อยได้ไหม?</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">We need more beans in the hopper.</div>
+    <div class="th">ต้องเติมเมล็ดกาแฟในเครื่องบดแล้ว</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’m going on my break now.</div>
+    <div class="th">ผมขอไปพักเบรกก่อนนะ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- MILK & TEMP CUSTOMISATION -->
+<div id="milktemp" class="section">
+
+  <div class="card">
+    <div class="eng">Can I get a large Flat White on Oat milk, extra hot please?</div>
+    <div class="th">แฟลตไวท์แก้วใหญ่ นมโอ๊ต ขอร้อนจัดๆ ครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll have a small Skinny Latte, lukewarm, for a kid.</div>
+    <div class="th">ลาเต้นมไขมันต่ำแก้วเล็ก ขอแค่อุ่นๆ สำหรับเด็กครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Could I get a Cappuccino with Soy milk and no chocolate powder on top?</div>
+    <div class="th">คาปูชิโน่นมถั่วเหลือง และไม่โรยผงช็อกโกแลตด้านบนนะครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">A medium Latte with Almond milk, but make it three-quarters full.</div>
+    <div class="th">ลาเต้แก้วกลาง นมอัลมอนด์ แต่ขอแค่ 3 ใน 4 ของแก้วครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I have a Flat White with a dash of cold milk on top?</div>
+    <div class="th">แฟลตไวท์ ขอเติมนมเย็นนิดนึงด้านบนตอนท้ายครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I'd like a Macadamia milk Latte, half-strength, extra hot.</div>
+    <div class="th">ลาเต้นมแมคคาเดเมีย กาแฟอ่อนครึ่งนึง และขอร้อนจัดครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">A large Skinny Cappuccino, extra foam, and make sure the milk is not burnt.</div>
+    <div class="th">คาปูชิโน่ใหญ่ นมพร่องมันเนย ฟองเยอะๆ และช่วยอย่าสตรีมนมจนไหม้นะครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- STRENGTH & SHOTS -->
+<div id="strength" class="section">
+
+  <div class="card">
+    <div class="eng">A double-shot Flat White with no foam, please.</div>
+    <div class="th">แฟลตไวท์ 2 ช็อต ไม่เอาฟองเลยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I get a Long Black with an extra shot and a side of pouring cream?</div>
+    <div class="th">ลองแบล็คเพิ่มอีกหนึ่งช็อต และขอครีมแยกข้างๆ ด้วยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">A quarter-strength Latte with two sugars and Oat milk.</div>
+    <div class="th">ลาเต้นมโอ๊ต กาแฟแค่ 1 ใน 4 ใส่น้ำตาล 2 ช้อน</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll have a short Macchiato, topped up with extra hot milk.</div>
+    <div class="th">มัคคิอาโต้ช็อตเดียว แต่เติมนมร้อนให้เต็มแก้วครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I get a Decaf Long Black with a tiny splash of Soy milk?</div>
+    <div class="th">ลองแบล็คดีแคฟ เติมนมถั่วเหลืองนิดเดียวจริงๆ ครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">One Magic, but can you make it with Skim milk?</div>
+    <div class="th">ขอ Magic หนึ่งแก้ว แต่ใช้นมไขมันต่ำได้ไหมครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">A triple-shot Iced Latte, no ice, just cold milk.</div>
+    <div class="th">ลาเต้เย็น 3 ช็อต ไม่ใส่น้ำแข็ง ใส่นมเย็นอย่างเดียวครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- SWEETENERS & SYRUPS -->
+<div id="sweeteners" class="section">
+
+  <div class="card">
+    <div class="eng">A large Soy Cappuccino with three Equals and extra chocolate.</div>
+    <div class="th">คาปูชิโน่นมถั่วเหลืองแก้วใหญ่ ใส่ Equal 3 ซอง และผงช็อกโกแลตเยอะๆ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I have a Caramel Latte, half-strength, with only half a pump of syrup?</div>
+    <div class="th">ลาเต้คาราเมล กาแฟอ่อนครึ่งนึง และใส่ไซรัปแค่ครึ่งปั๊มครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll take a Mocha on Almond milk with two sugars, extra hot.</div>
+    <div class="th">มอคค่านมอัลมอนด์ ใส่น้ำตาล 2 ช้อน และขอร้อนจัดครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">A small Flat White with a teaspoon of honey stirred in.</div>
+    <div class="th">แฟลตไวท์เล็ก ใส่น้ำผึ้ง 1 ช้อนชา และช่วยคนให้ด้วยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I get a Chai Latte with a dirty shot and no cinnamon?</div>
+    <div class="th">ชัยลาเต้เพิ่มกาแฟ 1 ช็อต และไม่โรยซินนามอนครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- NICHE & SPECIFIC -->
+<div id="niche" class="section">
+
+  <div class="card">
+    <div class="eng">A Long Black in a takeaway cup, but leave room for cold milk at the top.</div>
+    <div class="th">ลองแบล็คใส่แก้วกลับบ้าน แต่เผื่อที่ด้านบนไว้เติมนมเย็นด้วยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I get a Latte using lactose-free milk?</div>
+    <div class="th">ลาเต้หนึ่งแก้ว ใช้นมไม่มีแลคโตสได้ไหมครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I want a Piccolo, but extra-extra hot, almost boiling.</div>
+    <div class="th">พิกโคล่า ขอร้อนสุดๆ เกือบเดือดเลยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I have a large iced coffee with ice cream, but no whipped cream?</div>
+    <div class="th">ไอซ์คอฟฟี่แก้วใหญ่ ใส่ไอศกรีม แต่ไม่เอาวิปครีมครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll have a Babyccino with lots of marshmallows and a Flake on the side.</div>
+    <div class="th">เบบี้ชิโน่ ใส่มาร์ชเมลโลว์เยอะๆ และขอ Flake วางข้างๆ ครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I get a short Black in a large cup with hot water on the side?</div>
+    <div class="th">เอสเปรสโซ่ช็อตเดียว ใส่แก้วใหญ่ และขอน้ำร้อนแยกครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">One Affogato, but can you use decaf beans?</div>
+    <div class="th">อัฟโฟกาโต้หนึ่งที่ แต่ใช้เมล็ดดีแคฟได้ไหมครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- THE OFFICE RUN -->
+<div id="office" class="section">
+
+  <div class="card">
+    <div class="eng">I need a tray of four: a Flat White, a Skinny Cap, a Soy Latte, and a Strong Long Black.</div>
+    <div class="th">ขอถาด 4 แก้ว: แฟลตไวท์, คาปูพร่องมันเนย, ลาเต้ถั่วเหลือง และลองแบล็คเข้ม</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I get two Flat Whites, one with one sugar and one with no sugar, both on Oat?</div>
+    <div class="th">แฟลตไวท์นมโอ๊ต 2 แก้ว แก้วนึงใส่น้ำตาล แก้วนึงไม่ใส่</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">I’ll have a Latte and a Mocha. Can you put a rubber band around the Mocha?</div>
+    <div class="th">รับลาเต้กับมอคค่า ช่วยรัดหนังยางที่แก้วมอคค่าให้หน่อยครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Three Cappuccinos: one Decaf, one Skim, and one Full Cream.</div>
+    <div class="th">คาปูชิโน่ 3 แก้ว: ดีแคฟ, นมไขมันต่ำ และนมสดธรรมดา</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+<!-- DOUBLE CHECK -->
+<div id="doublecheck" class="section">
+
+  <div class="card">
+    <div class="eng">Actually, can you make that an Iced Long Black instead of hot?</div>
+    <div class="th">ขอเปลี่ยนเป็นลองแบล็คเย็นแทนแบบร้อนได้ไหมครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Wait, did I say Soy? I meant Almond milk, sorry!</div>
+    <div class="th">เดี๋ยวนะ เมื่อกี้ผมบอกนมถั่วเหลืองเหรอ จริงๆ เอานมอัลมอนด์ครับ ขอโทษที</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Make sure that’s a Ristretto shot, not a normal espresso.</div>
+    <div class="th">ย้ำนะครับว่าเอาช็อต Ristretto ไม่ใช่เอสเปรสโซ่ปกติ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Can I have that in my own keep-cup? It’s a 12-ounce size.</div>
+    <div class="th">ใส่แก้วส่วนตัวของผมได้ไหมครับ ขนาด 12 ออนซ์</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+  <div class="card">
+    <div class="eng">Could you split that large smoothie into two small cups for my kids?</div>
+    <div class="th">ช่วยแบ่งสมูทตี้แก้วใหญ่เป็นสองแก้วเล็กให้ลูกผมหน่อยได้ไหมครับ</div>
+    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
+  </div>
+
+</div>
+
+<script>
+let thaiVisible = true;
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+  if (id) document.getElementById(id).style.display = 'block';
+}
+
+function toggleThai() {
+  thaiVisible = !thaiVisible;
+  document.querySelectorAll('.th').forEach(th => {
+    th.style.display = thaiVisible ? 'block' : 'none';
+  });
+}
+
+function speak(btn) {
+  const text = btn.parentElement.querySelector('.eng').innerText;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-AU';
+  speechSynthesis.speak(u);
+}
+</script>
+
 </body>
 </html>
