@@ -37,15 +37,24 @@ select, button {
   border-radius: 20px;
   border: none;
   font-size: 14px;
+  cursor: pointer; /* เพิ่ม cursor pointer */
 }
 
 select {
   background: #d7c3a3;
+  width: 40%; /* ปรับขนาด dropdown ให้พอดีกับปุ่มใหม่ */
 }
 
 .toggle {
   background: #a47148;
   color: white;
+}
+
+/* สไตล์ปุ่ม POS ใหม่ */
+.btn-pos {
+  background: #4e342e; /* สีเข้มกว่าเพื่อให้ดูเป็นระบบ */
+  color: #fff;
+  font-weight: bold;
 }
 
 .section {
@@ -79,6 +88,7 @@ select {
   border-radius: 16px;
   padding: 6px 12px;
   font-size: 13px;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -86,29 +96,30 @@ select {
 <body>
 <div class="container">
   <h1>☕ Barista English</h1>
-<div class="controls">
-  <select onchange="showSection(this.value)">
-    <option value="">เลือกหมวด</option>
-<option value="coffeeTerms">☕ Aussie Coffee Terms</option>
-<option value="technical">🛠 Barista Technical Terms</option>
+  
+  <div class="controls">
+    <button class="btn-pos" onclick="window.location.href='POS.html'">🖥 POS</button>
 
-    <option value="greetings">🗣 Greetings</option>
-    <option value="orders">☕ Taking Orders</option>
-    <option value="confirming">✅ Confirming Orders</option>
-    <option value="payment">💰 Payment</option>
-    <option value="smalltalk">🙂 Small Talk</option>
+    <select onchange="showSection(this.value)">
+      <option value="">เลือกหมวด</option>
+      <option value="coffeeTerms">☕ Aussie Terms</option>
+      <option value="technical">🛠 Tech Terms</option>
+      <option value="greetings">🗣 Greetings</option>
+      <option value="orders">☕ Taking Orders</option>
+      <option value="confirming">✅ Confirming</option>
+      <option value="payment">💰 Payment</option>
+      <option value="smalltalk">🙂 Small Talk</option>
+      <option value="milktemp">🥛 Milk & Temp</option>
+      <option value="strength">⚡ Strength</option>
+      <option value="sweeteners">🍯 Sweeteners</option>
+      <option value="niche">🎯 Niche Orders</option>
+      <option value="office">👥 Office Run</option>
+      <option value="doublecheck">🔁 Double Check</option>
+    </select>
 
-    <option value="milktemp">🥛 Milk & Temperature</option>
-    <option value="strength">⚡ Strength & Shots</option>
-    <option value="sweeteners">🍯 Sweeteners & Syrups</option>
-    <option value="niche">🎯 Niche & Specific Orders</option>
-    <option value="office">👥 The Office Run</option>
-    <option value="doublecheck">🔁 Double Check</option>
-  </select>
+    <button class="toggle" onclick="toggleThai()">ซ่อนแปล</button>
+  </div>
 
-  <button class="toggle" onclick="toggleThai()">ซ่อนคำแปล</button>
-</div>
-<!-- DETAILED COFFEE TERMS -->
 <div id="coffeeTerms" class="section">
 
   <div class="card">
@@ -178,7 +189,6 @@ select {
   </div>
 
 </div>
-<!-- TECHNICAL TERMS -->
 <div id="technical" class="section">
 
   <div class="card">
@@ -250,8 +260,7 @@ select {
 </div>
 
 
-  <!-- GREETINGS -->
-<div id="greetings" class="section">
+  <div id="greetings" class="section">
 
   <div class="card">
     <div class="eng">Morning! How are you doing today?</div>
@@ -298,8 +307,7 @@ select {
 </div>
 
 
- <!-- TAKING ORDERS -->
-<div id="orders" class="section">
+ <div id="orders" class="section">
 
   <div class="card">
     <div class="eng">What can I get for you?</div>
@@ -368,83 +376,7 @@ select {
   </div>
 
 </div>
-<!-- DETAILED COFFEE TERMS -->
-<div id="coffee" class="section">
 
-  <div class="card">
-    <div class="eng">Flat White</div>
-    <div class="th">กาแฟนมที่โฟมน้อยและเนียนกว่า Latte (ยอดฮิตที่สุด)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Long Black</div>
-    <div class="th">คล้าย Americano แต่ใส่น้ำร้อนก่อนแล้วค่อยสกัดกาแฟ เพื่อรักษาครีม่า</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Short Black</div>
-    <div class="th">Espresso 1 ช็อต</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Piccolo Latte</div>
-    <div class="th">ลาเต้แก้วเล็ก (เอสเปรสโซในแก้วประมาณ 100 ml)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Magic</div>
-    <div class="th">กาแฟเฉพาะเมลเบิร์น: Double Ristretto กับนมในแก้วเล็ก</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Babyccino</div>
-    <div class="th">นมร้อนตีฟอง โรยผงโกโก้ (สำหรับเด็ก)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Strong</div>
-    <div class="th">เพิ่มกาแฟ (Double shot)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Weak</div>
-    <div class="th">ลดกาแฟ (Half shot)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Skinny</div>
-    <div class="th">นมไขมันต่ำ (Skim milk)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Soy / Almond / Oat / Macadamia milk</div>
-    <div class="th">นมทางเลือกต่าง ๆ</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Quarter strength</div>
-    <div class="th">ใส่กาแฟเพียง 1/4 (สำหรับคนไม่เน้นเข้ม)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Dash of milk</div>
-    <div class="th">ใส่นมแค่นิดเดียว</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-</div>
-<!-- CONFIRMING ORDERS -->
 <div id="confirming" class="section">
 
   <div class="card">
@@ -472,7 +404,6 @@ select {
   </div>
 
 </div>
-<!-- PAYMENT -->
 <div id="payment" class="section">
 
   <div class="card">
@@ -518,7 +449,6 @@ select {
   </div>
 
 </div>
-<!-- SMALL TALK -->
 <div id="smalltalk" class="section">
 
   <div class="card">
@@ -576,71 +506,6 @@ select {
   </div>
 
 </div>
-<!-- TEAM COMMUNICATION -->
-<div id="team" class="section">
-
-  <div class="card">
-    <div class="eng">Can you jump on the till?</div>
-    <div class="th">ช่วยไปเฝ้าเครื่องคิดเงินหน่อยได้ไหม?</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">I’ll handle the milk, you do the shots.</div>
-    <div class="th">เดี๋ยวผมสตรีมนม คุณกดช็อตกาแฟนะ</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">We’re running low on full cream milk.</div>
-    <div class="th">นมสดใกล้หมดแล้ว</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Can you restock the lids?</div>
-    <div class="th">ช่วยเติมฝาแก้วหน่อยได้ไหม?</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">I need a clean cloth, please.</div>
-    <div class="th">ขอผ้าสะอาดหน่อยครับ</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Behind!</div>
-    <div class="th">ระวังข้างหลังครับ! (ใช้ตอนเดินผ่าน)</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Watch out, hot coffee!</div>
-    <div class="th">ระวังครับ กาแฟร้อน!</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">Can you clear table five?</div>
-    <div class="th">ช่วยเก็บโต๊ะเบอร์ 5 หน่อยได้ไหม?</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">We need more beans in the hopper.</div>
-    <div class="th">ต้องเติมเมล็ดกาแฟในเครื่องบดแล้ว</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-  <div class="card">
-    <div class="eng">I’m going on my break now.</div>
-    <div class="th">ผมขอไปพักเบรกก่อนนะ</div>
-    <button class="speak" onclick="speak(this)">🔊 ฟังเสียง</button>
-  </div>
-
-</div>
-<!-- MILK & TEMP CUSTOMISATION -->
 <div id="milktemp" class="section">
 
   <div class="card">
@@ -686,7 +551,6 @@ select {
   </div>
 
 </div>
-<!-- STRENGTH & SHOTS -->
 <div id="strength" class="section">
 
   <div class="card">
@@ -732,7 +596,6 @@ select {
   </div>
 
 </div>
-<!-- SWEETENERS & SYRUPS -->
 <div id="sweeteners" class="section">
 
   <div class="card">
@@ -766,7 +629,6 @@ select {
   </div>
 
 </div>
-<!-- NICHE & SPECIFIC -->
 <div id="niche" class="section">
 
   <div class="card">
@@ -812,7 +674,6 @@ select {
   </div>
 
 </div>
-<!-- THE OFFICE RUN -->
 <div id="office" class="section">
 
   <div class="card">
@@ -840,7 +701,6 @@ select {
   </div>
 
 </div>
-<!-- DOUBLE CHECK -->
 <div id="doublecheck" class="section">
 
   <div class="card">
