@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Coffee Roaster - Aussie Master</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0f0f; --panel-dark: #1a1a1a; --accent-gold: #c5a059;
+            --text-main: #e0e0e0; --border-color: #2a2a2a; --success: #2d5a27; --danger: #a93226;
+        }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        .menu-section { flex: 1.8; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); padding: 20px; background: #0a0a0a; }
+        .mod-section { flex: 1.2; background: #141414; padding: 20px; border-right: 1px solid var(--border-color); overflow-y: auto; }
+        .bill-section { flex: 1.2; padding: 20px; display: flex; flex-direction: column; background: #0f0f0f; }
+        .header-brand { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--accent-gold); margin-bottom: 15px; text-align: center; border-bottom: 1px solid var(--accent-gold); padding-bottom: 10px;}
+        .category-tabs { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; }
+        .tab-btn { background: #1a1a1a; border: 1px solid var(--border-color); color: var(--text-main); padding: 10px 15px; cursor: pointer; border-radius: 4px; font-size: 10px; text-transform: uppercase; }
+        .tab-btn.active { background: var(--accent-gold); color: black; font-weight: bold; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; overflow-y: auto; }
+        .menu-card { background: var(--panel-dark); padding: 12px; border-radius: 6px; text-align: center; cursor: pointer; border: 1px solid #222; transition: 0.2s; }
+        .menu-card:hover { border-color: var(--accent-gold); background: #222; }
+        .menu-card strong { display: block; font-size: 12px; margin-bottom: 4px; color: #fff; line-height: 1.2; }
+        .menu-card span { font-size: 11px; color: var(--accent-gold); }
+        .receipt { flex: 1; background: #f0f0f0; color: #222; padding: 15px; border-radius: 2px; font-family: 'Courier New', monospace; font-size: 11px; overflow-y: auto; }
+        .receipt-item { border-bottom: 1px dashed #aaa; padding: 8px 0; display: flex; justify-content: space-between; }
+        .action-links { margin-top: 4px; display: flex; gap: 8px; font-size: 10px; }
+        .edit-tool { color: #0056b3; cursor: pointer; font-weight: bold; }
+        .remove-tool { color: var(--danger); cursor: pointer; font-weight: bold; }
+        .btn-main { width: 100%; padding: 15px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .btn-add { background: var(--accent-gold); color: black; }
+        .btn-success { background: var(--success); color: white; }
+        /* สไตล์ปุ่มใหม่สำหรับ Listen Again */
+        .btn-replay { background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); margin-top: 5px; }
+        .btn-replay:hover { background: #222; }
+
+        #script-box { display: none; margin-top: 10px; font-size: 12px; color: #55ff55; background: #222; padding: 10px; border-radius: 4px; border: 1px solid #444; }
+        .mod-label { font-size: 9px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 8px; display: block; letter-spacing: 1px; }
+        .chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 15px; }
+        .chip { background: #1f1f1f; border: 1px solid #333; color: #bbb; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 10px; text-align: center; }
+        .chip.active { background: #c5a059; border-color: #c5a059; color: black; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="menu-section">
+        <div class="header-brand">TCR BARISTA TRAINING</div>
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="setCategory('Coffee')">Coffee</button>
+            <button class="tab-btn" onclick="setCategory('Hot Drinks')">Hot Drinks</button>
+            <button class="tab-btn" onclick="setCategory('Cold Drinks')">Cold Drinks</button>
+            <button class="tab-btn" onclick="setCategory('Bakery')">Bakery</button>
+        </div>
+        <div class="menu-grid" id="menu-grid"></div>
+    </div>
+
+    <div class="mod-section">
+        <h3 id="target-name" style="margin-top:0; color:var(--accent-gold);">Select Item</h3>
+        <span class="mod-label">Temperature</span>
+        <div class="chip-grid" id="mod-temp">
+            <div class="chip active" onclick="setMod('temp', 'Hot')">Hot</div>
+            <div class="chip" onclick="setMod('temp', 'Iced')">Iced</div>
+        </div>
+        <span class="mod-label">Milk</span>
+        <div class="chip-grid" id="mod-milk">
+            <div class="chip active" onclick="setMod('milk', 'Full Cream')">Full Cream</div>
+            <div class="chip" onclick="setMod('milk', 'Semi Skimmed')">Semi Skimmed</div>
+            <div class="chip" onclick="setMod('milk', 'Oat Milk')">Oat Milk</div>
+            <div class="chip" onclick="setMod('milk', 'Soy Milk')">Soy Milk</div>
+            <div class="chip" onclick="setMod('milk', 'Almond Milk')">Almond Milk</div>
+            <div class="chip" onclick="setMod('milk', 'Macadamia')">Macadamia</div>
+        </div>
+        <span class="mod-label">Sweetness (%)</span>
+        <div class="chip-grid" id="mod-sweet">
+            <div class="chip active" onclick="setMod('sweet', '100%')">100</div>
+            <div class="chip" onclick="setMod('sweet', '50%')">50</div>
+            <div class="chip" onclick="setMod('sweet', '0%')">0</div>
+        </div>
+        <span class="mod-label">Shots</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#1a1a1a; padding:10px; border-radius:4px;">
+            <button onclick="changeShot(-1)" style="background:var(--accent-gold); border:none; border-radius:50%; width:30px; height:30px; cursor:pointer;">-</button>
+            <span id="shot-count" style="color:var(--accent-gold); font-weight:bold;">0 Shots</span>
+            <button onclick="changeShot(1)" style="background:var(--accent-gold); border:none; border-radius:50%; width:30px; height:30px; cursor:pointer;">+</button>
+        </div>
+        <button class="btn-main btn-add" id="add-btn" onclick="addItem()">Add to Bill</button>
+    </div>
+
+    <div class="bill-section">
+        <div class="receipt">
+            <div style="text-align:center; border-bottom:1px solid #999; padding-bottom:10px; margin-bottom:10px; font-weight: bold;">TCR RECEIPT</div>
+            <div id="bill-items">*** EMPTY ***</div>
+            <div id="bill-total" style="margin-top:10px; font-weight:bold; text-align:right; border-top:1px solid #999;"></div>
+        </div>
+        
+        <button class="btn-main" style="background:var(--accent-gold); color:black;" onclick="randomOrder()">🔊 Next Aussie Customer</button>
+        
+        <button class="btn-main btn-replay" onclick="replayOrder()">🔄 Listen Again</button>
+
+        <button onclick="toggleScript()" style="background:none; border:none; color:var(--accent-gold); font-size:10px; cursor:pointer; margin-top:5px;">Show/Hide Script</button>
+        <div id="script-box"></div>
+        <button class="btn-main btn-success" onclick="verifyOrder()">Verify Order</button>
+    </div>
+
+<script>
+    // --- 1. MENU DATA (Fixed Missing Commas) ---
+    const menus = [
+        { name: "Ristretto", price: 4.00, cat: "Coffee" },
+        { name: "Espresso", price: 4.00, cat: "Coffee" },
+        { name: "Machiato", price: 4.50, cat: "Coffee" },
+        { name: "Piccolo", price: 4.50, cat: "Coffee" },
+        { name: "Flat White", price: 4.50, cat: "Coffee" },
+        { name: "Latte", price: 4.50, cat: "Coffee" },
+        { name: "Cappuccino", price: 4.50, cat: "Coffee" },
+        { name: "Mocha", price: 4.50, cat: "Coffee" },
+        { name: "Long Black", price: 4.50, cat: "Coffee" },
+        { name: "Keto Coffee", price: 7.00, cat: "Coffee" },
+        { name: "Affogato", price: 6.50, cat: "Coffee" },
+        { name: "Iced Latte", price: 4.50, cat: "Coffee" },
+        { name: "Iced Long Black", price: 4.50, cat: "Coffee" },
+        { name: "Blended Ice Coffee", price: 7.00, cat: "Coffee" },
+        { name: "Blended Mocha", price: 7.00, cat: "Coffee" },
+        { name: "Nitro Coffee", price: 6.00, cat: "Coffee" },
+        { name: "Bespoke Sticky Chai", price: 4.50, cat: "Hot Drinks" },
+        { name: "Matcha Latte", price: 4.50, cat: "Hot Drinks" },
+        { name: "Chai Latte", price: 3.50, cat: "Hot Drinks" },
+        { name: "Hot Chocolate", price: 4.50, cat: "Hot Drinks" },
+        { name: "Pot of Loose Leaf Tea", price: 6.00, cat: "Hot Drinks" },
+        { name: "Fruit Smoothies", price: 7.50, cat: "Cold Drinks" },
+        { name: "Milkshake", price: 6.50, cat: "Cold Drinks" },
+        { name: "Iced Chocolate", price: 7.00, cat: "Cold Drinks" },
+        { name: "Juice & Sparkling", price: 4.50, cat: "Cold Drinks" },
+        { name: "Water & Sparkling", price: 4.00, cat: "Cold Drinks" },
+        
+        // --- BAKERY & PATISSERIE ---
+        { name: "Sachertorte", price: 7.80, cat: "Bakery" },
+        { name: "Apple Strudel", price: 6.50, cat: "Bakery" },
+        { name: "Croissant", price: 4.00, cat: "Bakery" },
+        { name: "Pain au Chocolat", price: 4.50, cat: "Bakery" },
+        { name: "Lemon Tart", price: 5.50, cat: "Bakery" }
+    ];
+
+    let cart = [], currentCat = 'Coffee', selectedItem = null, shots = 0, editingIdx = -1, currentTask = null;
+    let config = { temp: 'Hot', milk: 'Full Cream', sweet: '100%' };
+
+    function renderMenu() {
+        const grid = document.getElementById('menu-grid'); grid.innerHTML = '';
+        menus.filter(m => m.cat === currentCat).forEach(m => {
+            const el = document.createElement('div'); el.className = 'menu-card';
+            el.innerHTML = `<strong>${m.name}</strong><span>$${m.price.toFixed(2)}</span>`;
+            el.onclick = () => { selectedItem = m; document.getElementById('target-name').innerText = m.name; };
+            grid.appendChild(el);
+        });
+    }
+
+    function setCategory(cat) { 
+        currentCat = cat; 
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText === cat));
+        renderMenu(); 
+    }
+
+    function setMod(group, val) {
+        config[group] = val;
+        document.getElementById(`mod-${group}`).querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.innerText === val));
+    }
+
+    function changeShot(v) { shots = Math.max(-1, shots + v); document.getElementById('shot-count').innerText = `${shots} Shots`; }
+
+    function addItem() {
+        if(!selectedItem) return;
+        const item = { ...selectedItem, ...config, shots, finalPrice: selectedItem.price + (shots > 0 ? shots * 0.5 : 0) };
+        if(editingIdx > -1) { cart[editingIdx] = item; editingIdx = -1; document.getElementById('add-btn').innerText = "Add to Bill"; }
+        else { cart.push(item); }
+        updateReceipt(); resetConfig();
+    }
+
+    function updateReceipt() {
+        const area = document.getElementById('bill-items'); area.innerHTML = cart.length ? '' : '*** EMPTY ***';
+        let total = 0;
+        cart.forEach((item, i) => {
+            total += item.finalPrice;
+            area.innerHTML += `<div class="receipt-item"><div><b>${item.name}</b> (${item.temp})<br><small>${item.milk}, ${item.sweet} Sugar, ${item.shots} Shot</small><div class="action-links"><span class="edit-tool" onclick="editItem(${i})">EDIT</span><span class="remove-tool" onclick="removeItem(${i})">REMOVE</span></div></div><div>$${item.finalPrice.toFixed(2)}</div></div>`;
+        });
+        document.getElementById('bill-total').innerText = `TOTAL: $${total.toFixed(2)}`;
+    }
+
+    function removeItem(idx) { cart.splice(idx, 1); updateReceipt(); }
+    function editItem(idx) {
+        editingIdx = idx; const item = cart[idx];
+        selectedItem = item; document.getElementById('target-name').innerText = "Edit: " + item.name;
+        setMod('temp', item.temp); setMod('milk', item.milk); setMod('sweet', item.sweet);
+        shots = item.shots; document.getElementById('shot-count').innerText = `${shots} Shots`;
+        document.getElementById('add-btn').innerText = "Update Bill";
+    }
+
+    function resetConfig() { selectedItem = null; shots = 0; document.getElementById('shot-count').innerText = "0 Shots"; document.getElementById('target-name').innerText = "Select Item"; }
+
+    function randomOrder() {
+        // --- 2. ORDERS ARRAY (Formatted as Array in 'match') ---
+        const orders = [
+            // --- EASY: Just Bakery ---
+            { txt: "G'day! Can I just grab a Croissant, thanks.", match: [{ name: "Croissant" }] },
+            { txt: "Morning! One Apple Strudel please.", match: [{ name: "Apple Strudel" }] },
+            
+            // --- MEDIUM: Drinks & Bakery ---
+            { txt: "Hey mate, can I get a flat white and a Lemon Tart, cheers.", match: [{ name: "Flat White" }, { name: "Lemon Tart" }] },
+            { txt: "G'day, I'll take a hot chocolate on oat milk and a Pain au Chocolat.", match: [{ name: "Hot Chocolate", milk: "Oat Milk" }, { name: "Pain au Chocolat" }] },
+            { txt: "Morning! A skinny latte and a Sachertorte thanks.", match: [{ name: "Latte", milk: "Semi Skimmed" }, { name: "Sachertorte" }] },
+
+            // --- HARD: Specific Mods & Bakery ---
+            { txt: "G'day mate! Can I grab a strong iced latte on soy, no sugar, and an Apple Strudel.", match: [{ name: "Iced Latte", temp: "Iced", milk: "Soy Milk", sweet: "0%", shots: 1 }, { name: "Apple Strudel" }] },
+            { txt: "Morning! I'll have a dirty chai on oat, seventy-five sugar, and a Croissant.", match: [{ name: "Chai Latte", temp: "Hot", milk: "Oat Milk", sweet: "75%", shots: 1 }, { name: "Croissant" }] },
+            { txt: "Hey, can I get a double shot long black, zero sugar, and a lemon tart.", match: [{ name: "Long Black", temp: "Hot", milk: "Full Cream", sweet: "0%", shots: 2 }, { name: "Lemon Tart" }] },
+            
+            // --- COFFEE BASICS ---
+            { txt: "G'day! Can I get a flat white, cheers.", match: [{ name: "Flat White", temp: "Hot", milk: "Full Cream", sweet: "100%" }] },
+            { txt: "Morning! Just a skinny latte for me thanks.", match: [{ name: "Latte", temp: "Hot", milk: "Semi Skimmed", sweet: "100%" }] },
+            { txt: "Hey mate, I'll have a long black.", match: [{ name: "Long Black", temp: "Hot", milk: "Full Cream", sweet: "100%" }] },
+            { txt: "Can I grab an iced latte? Cheers.", match: [{ name: "Iced Latte", temp: "Iced", milk: "Full Cream", sweet: "100%" }] },
+            { txt: "Just a hot choccie for the little one, thanks.", match: [{ name: "Hot Chocolate", temp: "Hot", milk: "Full Cream", sweet: "100%" }] },
+            { txt: "G'day, a cappuccino thanks mate.", match: [{ name: "Cappuccino", temp: "Hot", milk: "Full Cream", sweet: "100%" }] },
+            { txt: "Morning, an espresso please.", match: [{ name: "Espresso", temp: "Hot", milk: "Full Cream", sweet: "100%" }] },
+
+            // --- MEDIUM (Milk & Sugar) ---
+            { txt: "G'day! Can I get an oat milk latte, no sugar.", match: [{ name: "Latte", temp: "Hot", milk: "Oat Milk", sweet: "0%" }] },
+            { txt: "Hey mate, iced latte with soy milk and half sugar please.", match: [{ name: "Iced Latte", temp: "Iced", milk: "Soy Milk", sweet: "50%" }] },
+            { txt: "Morning! Flat white on almond, one sugar thanks.", match: [{ name: "Flat White", temp: "Hot", milk: "Almond Milk", sweet: "100%" }] },
+            { txt: "Can I get a matcha latte on oat? Make it a bit sweet, seventy-five percent.", match: [{ name: "Matcha Latte", temp: "Hot", milk: "Oat Milk", sweet: "75%" }] },
+
+            // --- HARD (Shots & Tricky Aussie Slang) ---
+            { txt: "G'day mate! Can I get a latte on soy, make it strong with an extra shot, and no sugar.", match: [{ name: "Latte", temp: "Hot", milk: "Soy Milk", sweet: "0%", shots: 1 }] },
+            { txt: "Hey! Can I grab an iced long black, double shots, no sugar, cheers.", match: [{ name: "Iced Long Black", temp: "Iced", milk: "Full Cream", sweet: "0%", shots: 2 }] },
+            { txt: "Morning! Skinny cap, almond milk, seventy-five sugar, and just a weak one, minus a shot.", match: [{ name: "Cappuccino", temp: "Hot", milk: "Almond Milk", sweet: "75%", shots: -1 }] },
+            
+            // --- EXTRA TRICKY ---
+            { txt: "G'day! Ristretto, extra shot, no sugar mate.", match: [{ name: "Ristretto", temp: "Hot", milk: "Full Cream", sweet: "0%", shots: 1 }] },
+            { txt: "Morning mate, mocha on almond, extra shot, quarter sugar.", match: [{ name: "Mocha", temp: "Hot", milk: "Almond Milk", sweet: "25%", shots: 1 }] },
+            { txt: "G'day! Espresso, triple shots mate.", match: [{ name: "Espresso", temp: "Hot", milk: "Full Cream", sweet: "100%", shots: 2 }] },
+            { txt: "G'day! Flat white on soy, half sugar, extra shot thanks.", match: [{ name: "Flat White", temp: "Hot", milk: "Soy Milk", sweet: "50%", shots: 1 }] }
+        ];
+
+        currentTask = orders[Math.floor(Math.random() * orders.length)];
+        
+        // Show text in hidden box (toggle-able)
+        const scriptBox = document.getElementById('script-box');
+        if (scriptBox) scriptBox.innerText = currentTask.txt;
+
+        // Speak
+        speakText(currentTask.txt);
+        
+        cart = []; updateReceipt();
+    }
+
+    // ฟังก์ชันใหม่สำหรับพูดเสียง (ใช้ร่วมกันทั้งปุ่ม Next และ Replay)
+    function speakText(txt) {
+        window.speechSynthesis.cancel(); // หยุดเสียงเก่าก่อน (ถ้ามี)
+        const s = new SpeechSynthesisUtterance(txt);
+        s.lang = 'en-AU';
+        s.rate = 0.85; 
+        window.speechSynthesis.speak(s);
+    }
+
+    // ฟังก์ชันใหม่สำหรับปุ่ม Listen Again
+    function replayOrder() {
+        if (!currentTask) return; // ถ้ายังไม่มีออเดอร์ ไม่ต้องทำอะไร
+        speakText(currentTask.txt);
+    }
+
+    function toggleScript() { const s = document.getElementById('script-box'); s.style.display = (s.style.display === 'none' || s.style.display === '') ? 'block' : 'none'; }
+
+    function verifyOrder() {
+        if(!cart.length || !currentTask) return;
+        
+        // --- 3. VERIFY LOGIC (Standardized) ---
+        let ok = cart.length === currentTask.match.length;
+        if(ok) {
+            currentTask.match.forEach((taskItem, i) => {
+                const cartItem = cart[i];
+                if(cartItem.name !== taskItem.name) ok = false;
+                
+                if(taskItem.milk && cartItem.milk !== taskItem.milk) ok = false;
+                if(taskItem.sweet && cartItem.sweet !== taskItem.sweet) ok = false;
+                if(taskItem.temp && cartItem.temp !== taskItem.temp) ok = false;
+                if(taskItem.shots !== undefined && cartItem.shots !== taskItem.shots) ok = false;
+            });
+        }
+        alert(ok ? "Spot on! Cheers mate!" : "Nah, that's not what I asked for. Check the items again!");
+    }
+
+    window.onload = renderMenu;
+</script>
+</body>
+</html>
